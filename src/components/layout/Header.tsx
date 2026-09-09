@@ -77,7 +77,7 @@ export default function Header() {
           {/* Brand Logo */}
           <Link href="/" className="flex items-center shrink-0 py-2">
             <Image
-              src={`${R2_PUBLIC_URL}/public/images/l2.png`}
+              src={`${R2_PUBLIC_URL}/public/images/i5.png`}
               alt="Big Taxi Tiruppur"
               width={140}
               height={40}

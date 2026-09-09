@@ -116,108 +116,128 @@ export default function ServicesSection() {
 
   return (
     <section className="py-16 md:py-24 px-6 md:px-12 bg-[#FAF8F5]">
-      <div className="max-w-7xl mx-auto">
-        {/* Card Grid Container */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-          {services.slice(currentIndex, currentIndex + 2).map((service) => {
-            const detailUrl = locationSlug
-              ? `/services/${locationSlug}/${service.slug}`
-              : `/services/${service.location || 'all'}/${service.slug}`;
+      <div className="max-w-7xl mx-auto relative">
+        {/* Card Grid Container with Navigation Buttons on Sides */}
+        <div className="relative">
+          {/* Previous Button - Left Side */}
+          <button
+            onClick={handlePrev}
+            disabled={currentIndex === 0}
+            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 -ml-5 md:-ml-6 p-3 bg-white hover:bg-gray-50 rounded-full shadow-lg border border-gray-200/80 disabled:opacity-30 disabled:hover:bg-white disabled:cursor-not-allowed transition-all duration-200 hover:scale-105"
+            aria-label="Previous services"
+          >
+            <ChevronLeft className="w-5 h-5 text-gray-700" />
+          </button>
 
-            return (
-              <div key={service._id} className="flex flex-col">
-                {/* Image Container with Rounded Corners */}
-                <div className="relative w-full aspect-[16/9] rounded-2xl overflow-hidden mb-6 bg-gray-200">
-                  {service.image ? (
-                    <Image
-                      src={getImageUrl(service.image)}
-                      alt={service.title}
-                      fill
-                      className="object-cover"
-                      sizes="(max-width: 768px) 100vw, 50vw"
-                    />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center bg-gray-300">
-                      <span className="text-4xl opacity-30">🚗</span>
-                    </div>
-                  )}
+          {/* Cards Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12 px-8 md:px-12">
+            {services.slice(currentIndex, currentIndex + 2).map((service) => {
+              const detailUrl = locationSlug
+                ? `/services/${locationSlug}/${service.slug}`
+                : `/services/${service.location || 'all'}/${service.slug}`;
 
-                  {/* Optional Metadata Badges */}
-                  {service.location && (
-                    <span className="absolute top-4 left-4 bg-black/60 text-white text-[11px] px-3 py-1 rounded-full backdrop-blur-sm">
-                      {service.location}
+              return (
+                <div key={service._id} className="flex flex-col">
+                  {/* Image Container with Rounded Corners */}
+                  <div className="relative w-full aspect-[16/9] rounded-2xl overflow-hidden mb-6 bg-gray-200">
+                    {service.image ? (
+                      <Image
+                        src={getImageUrl(service.image)}
+                        alt={service.title}
+                        fill
+                        className="object-cover"
+                        sizes="(max-width: 768px) 100vw, 50vw"
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center bg-gray-300">
+                        <span className="text-4xl opacity-30">🚗</span>
+                      </div>
+                    )}
+
+                    {/* Optional Metadata Badges */}
+                    {service.location && (
+                      <span className="absolute top-4 left-4 bg-black/60 text-white text-[11px] px-3 py-1 rounded-full backdrop-blur-sm">
+                        {service.location}
+                      </span>
+                    )}
+                    {service.isFeatured && (
+                      <span className="absolute top-4 right-4 bg-white/90 text-gray-900 text-[11px] font-semibold px-3 py-1 rounded-full shadow-sm">
+                        Featured
+                      </span>
+                    )}
+                  </div>
+
+                  {/* Content Details */}
+                  <div className="flex flex-col flex-grow items-start">
+                    <span className="text-xs text-gray-500 mb-1 capitalize tracking-wide font-normal">
+                      {service.location ? service.location : 'Service'}
                     </span>
-                  )}
-                  {service.isFeatured && (
-                    <span className="absolute top-4 right-4 bg-white/90 text-gray-900 text-[11px] font-semibold px-3 py-1 rounded-full shadow-sm">
-                      Featured
-                    </span>
-                  )}
-                </div>
 
-                {/* Content Details */}
-                <div className="flex flex-col flex-grow items-start">
-                  <span className="text-xs text-gray-500 mb-1 capitalize tracking-wide font-normal">
-                    {service.location ? service.location : 'Service'}
-                  </span>
+                    <h3 className="text-2xl md:text-[28px] font-semibold text-gray-900 tracking-tight leading-snug mb-3">
+                      {service.title}
+                    </h3>
 
-                  <h3 className="text-2xl md:text-[28px] font-semibold text-gray-900 tracking-tight leading-snug mb-3">
-                    {service.title}
-                  </h3>
+                    <p className="text-sm text-gray-600 leading-relaxed mb-4 max-w-xl line-clamp-2">
+                      {service.description}
+                    </p>
 
-                  <p className="text-sm text-gray-600 leading-relaxed mb-4 max-w-xl line-clamp-2">
-                    {service.description}
-                  </p>
+                    {/* Service Features Tag Pills */}
+                    {service.features && service.features.length > 0 && (
+                      <div className="flex flex-wrap gap-2 mb-6">
+                        {service.features.map((feature, idx) => (
+                          <span
+                            key={idx}
+                            className="text-[11px] text-gray-500 bg-gray-100 px-2.5 py-1 rounded-md"
+                          >
+                            {feature}
+                          </span>
+                        ))}
+                      </div>
+                    )}
 
-                  {/* Service Features Tag Pills */}
-                  {service.features && service.features.length > 0 && (
-                    <div className="flex flex-wrap gap-2 mb-6">
-                      {service.features.map((feature, idx) => (
-                        <span
-                          key={idx}
-                          className="text-[11px] text-gray-500 bg-gray-100 px-2.5 py-1 rounded-md"
-                        >
-                          {feature}
-                        </span>
-                      ))}
+                    {/* CTA Button */}
+                    <div className="mt-auto pt-2">
+                      <Link
+                        href={detailUrl}
+                        className="inline-block px-5 py-2 border border-sky-400 text-sky-600 text-xs font-medium rounded-full hover:bg-sky-50 transition-colors"
+                      >
+                        Learn more
+                      </Link>
                     </div>
-                  )}
-
-                  {/* CTA Button */}
-                  <div className="mt-auto pt-2">
-                    <Link
-                      href={detailUrl}
-                      className="inline-block px-5 py-2 border border-sky-400 text-sky-600 text-xs font-medium rounded-full hover:bg-sky-50 transition-colors"
-                    >
-                      Learn more
-                    </Link>
                   </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
+
+          {/* Next Button - Right Side */}
+          <button
+            onClick={handleNext}
+            disabled={currentIndex >= Math.max(0, services.length - 2)}
+            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 -mr-5 md:-mr-6 p-3 bg-white hover:bg-gray-50 rounded-full shadow-lg border border-gray-200/80 disabled:opacity-30 disabled:hover:bg-white disabled:cursor-not-allowed transition-all duration-200 hover:scale-105"
+            aria-label="Next services"
+          >
+            <ChevronRight className="w-5 h-5 text-gray-700" />
+          </button>
         </div>
 
-        {/* Carousel Navigation Buttons - Always Rendered */}
-        <div className="flex items-center justify-center">
-          <div className="inline-flex items-center gap-1 bg-white p-1 rounded-full border border-gray-200/80 shadow-sm">
-            <button
-              onClick={handlePrev}
-              disabled={currentIndex === 0}
-              className="p-2.5 text-gray-600 hover:text-gray-900 disabled:opacity-30 disabled:hover:text-gray-600 transition-colors rounded-full"
-              aria-label="Previous services"
-            >
-              <ChevronLeft className="w-4 h-4" />
-            </button>
-            <button
-              onClick={handleNext}
-              disabled={currentIndex >= Math.max(0, services.length - 2)}
-              className="p-2.5 text-gray-600 hover:text-gray-900 disabled:opacity-30 disabled:hover:text-gray-600 transition-colors rounded-full"
-              aria-label="Next services"
-            >
-              <ChevronRight className="w-4 h-4" />
-            </button>
-          </div>
+        {/* Navigation Indicator Dots */}
+        <div className="flex items-center justify-center gap-2 mt-2">
+          {Array.from({ length: Math.max(1, Math.ceil(services.length / 2)) }).map((_, idx) => {
+            const isActive = idx === Math.floor(currentIndex / 1);
+            return (
+              <button
+                key={idx}
+                onClick={() => setCurrentIndex(idx * 1)}
+                className={`transition-all duration-300 rounded-full ${
+                  isActive
+                    ? 'w-8 h-2 bg-gray-900'
+                    : 'w-2 h-2 bg-gray-300 hover:bg-gray-400'
+                }`}
+                aria-label={`Go to slide ${idx + 1}`}
+              />
+            );
+          })}
         </div>
       </div>
     </section>

@@ -222,7 +222,7 @@ Please confirm this booking at your earliest. Thank you!`;
               Step 4: Choose date and time for pickup
             </div>
             <div itemProp="step">
-              Step 5: Submit your booking and confirm via Telegram
+              Step 5: Submit your booking and confirm 
             </div>
             <div itemProp="totalTime">PT5M</div>
           </div>
@@ -418,13 +418,13 @@ Please confirm this booking at your earliest. Thank you!`;
                     </>
                   ) : (
                     <>
-                      <Send className="w-5 h-5" /> Send Booking via Telegram
+                      <Send className="w-5 h-5" /> Send Booking 
                     </>
                   )}
                 </button>
 
                 <p className="text-center text-xs xs:text-sm text-gray-500 font-medium">
-                  We'll send your booking details via Telegram to our team. Please wait for confirmation!
+                  We'll send your booking details to our team. Please wait for confirmation!
                 </p>
               </form>
             </div>

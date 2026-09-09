@@ -216,13 +216,15 @@ export default function HomePage() {
         <HeroSection />
         {/* <AboutSection /> */}
         <BookingSection/>
+        <FleetSection />
+        <ExpectExcellence />
         <ServicesSection />
         {/* <PricingSection /> */}
-        <FleetSection />
+        
         {/* <WhyChooseUsSection /> */}
         {/* <FAQSection /> */}
         {/* <ContactSection /> */}
-        <ExpectExcellence />
+        
         <CTASection />
       </div>
     </>

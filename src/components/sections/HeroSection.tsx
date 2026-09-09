@@ -1,6 +1,7 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useRef } from "react"
+import type { RefObject } from "react"
 import { Calendar, Clock, MapPin, Send, CheckCircle, User, Phone } from "lucide-react"
 
 // Get environment variables (must have NEXT_PUBLIC_ prefix for client components)
@@ -20,11 +21,32 @@ export default function HeroSection() {
     vehicleType: "",
     tripType: ""
   })
-  
+
   const [isBookingSent, setIsBookingSent] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [showSuccess, setShowSuccess] = useState(false)
-  
+
+  // Refs for date/time inputs so we can open their native pickers
+  // from anywhere in the field, not just the tiny icon
+  const dateInputRef = useRef<HTMLInputElement>(null)
+  const timeInputRef = useRef<HTMLInputElement>(null)
+
+  // Opens the native picker for a given input ref.
+  // Falls back to .focus() on browsers that don't support showPicker()
+  // (e.g. Safari/iOS), which still opens the native wheel picker on tap.
+  const openPicker = (ref: RefObject<HTMLInputElement | null>) => {
+    if (!ref.current) return
+    if (typeof ref.current.showPicker === "function") {
+      try {
+        ref.current.showPicker()
+      } catch (err) {
+        ref.current.focus()
+      }
+    } else {
+      ref.current.focus()
+    }
+  }
+
   // Generate Telegram message
   const generateTelegramMessage = () => {
     const message = `🚗 *New Booking Request - Big Taxi Tiruppur* 🚗
@@ -65,9 +87,9 @@ Please confirm this booking at your earliest. Thank you!`
 
     try {
       const message = generateTelegramMessage()
-      
+
       console.log("Sending to Telegram...")
-      
+
       // Send message to Telegram via Bot API
       const response = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
         method: 'POST',
@@ -145,7 +167,7 @@ Please confirm this booking at your earliest. Thank you!`
                 <CheckCircle className="w-4 h-4 text-green-400 flex-shrink-0" />
                 <div className="text-left">
                   <p className="font-semibold text-green-300 text-xs">Booking Sent!</p>
-                  
+
                 </div>
               </div>
             )}
@@ -205,9 +227,14 @@ Please confirm this booking at your earliest. Thank you!`
 
               {/* Date, Time, Vehicle, Trip Type */}
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
-                <div className="relative">
-                  <Calendar className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-blue-400 z-10" />
+                {/* Date field - entire box opens native calendar picker */}
+                <div
+                  className="relative cursor-pointer"
+                  onClick={() => openPicker(dateInputRef)}
+                >
+                  <Calendar className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-blue-400 z-10 pointer-events-none" />
                   <input
+                    ref={dateInputRef}
                     type="date"
                     required
                     value={formData.date}
@@ -215,9 +242,15 @@ Please confirm this booking at your earliest. Thank you!`
                     className="w-full pl-8 pr-3 py-2 bg-slate-800/50 border border-slate-600 rounded-lg text-white text-sm focus:outline-none focus:border-blue-500 transition-colors cursor-pointer"
                   />
                 </div>
-                <div className="relative">
-                  <Clock className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-blue-400 z-10" />
+
+                {/* Time field - entire box opens native clock picker */}
+                <div
+                  className="relative cursor-pointer"
+                  onClick={() => openPicker(timeInputRef)}
+                >
+                  <Clock className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-blue-400 z-10 pointer-events-none" />
                   <input
+                    ref={timeInputRef}
                     type="time"
                     required
                     value={formData.time}
@@ -225,6 +258,7 @@ Please confirm this booking at your earliest. Thank you!`
                     className="w-full pl-8 pr-3 py-2 bg-slate-800/50 border border-slate-600 rounded-lg text-white text-sm focus:outline-none focus:border-blue-500 transition-colors cursor-pointer"
                   />
                 </div>
+
                 <div>
                   <select
                     value={formData.vehicleType}
@@ -258,10 +292,10 @@ Please confirm this booking at your earliest. Thank you!`
                 type="submit"
                 disabled={isLoading || isBookingSent}
                 className={`w-full py-2.5 rounded-xl font-semibold text-sm transition-all flex items-center justify-center gap-2 ${
-                  isBookingSent 
-                    ? "bg-green-600 text-white" 
-                    : isLoading 
-                    ? "bg-slate-600 text-slate-300 cursor-not-allowed" 
+                  isBookingSent
+                    ? "bg-green-600 text-white"
+                    : isLoading
+                    ? "bg-slate-600 text-slate-300 cursor-not-allowed"
                     : "bg-gradient-to-r from-blue-600 to-green-500 hover:from-green-700 hover:to-green-600 text-white shadow-lg hover:shadow-xl"
                 }`}
               >
@@ -276,7 +310,7 @@ Please confirm this booking at your earliest. Thank you!`
                   </>
                 ) : (
                   <>
-                    <Send className="w-4 h-4" /> Book Now via Telegram
+                    <Send className="w-4 h-4" /> Book Now
                   </>
                 )}
               </button>
