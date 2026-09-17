@@ -2,7 +2,7 @@ import apiClient from './axiosConfig';
 
 export interface SeoData {
   _id?: string;
-  pageType: 'homepage' | 'about' | 'services' | 'fleet' | 'contact' | 'booking';
+  pageType: 'homepage' | 'about' | 'services' | 'fleet' | 'contact' | 'booking' | 'blog' | 'blog-post';
   pageIdentifier: string;
   metaTitle: string;
   metaDescription: string;
@@ -51,30 +51,41 @@ export const seoAPI = {
     const cacheKey = `${pageType}/${identifier}`;
     const now = Date.now();
     const cached = seoCache.get(cacheKey);
-    
+
     if (!forceRefresh && cached && (now - cached.timestamp) < CACHE_TTL) {
       console.log(`📦 Using cached SEO for ${cacheKey}`);
       return { success: true, data: cached.data };
     }
-    
+
+    const url = `/seo/page/${pageType}/${identifier}`;
+
     try {
       const timestamp = Date.now();
-      const response = await apiClient.get(`/seo/page/${pageType}/${identifier}?_cb=${timestamp}`);
-      
+      const response = await apiClient.get(`${url}?_cb=${timestamp}`);
+
       if (response.data?.success && response.data?.data) {
         seoCache.set(cacheKey, {
           data: response.data.data,
           timestamp: now
         });
       }
-      
+
       return response.data as SeoResponse;
-    } catch (error) {
-      console.error('Error fetching SEO:', error);
-      throw error;
+    } catch (error: any) {
+      const status = error?.response?.status;
+
+      // 400/404 = no SEO record for this page. Not a real error — just skip.
+      if (status === 400 || status === 404) {
+        console.warn(`[SEO] No SEO data for ${url} (HTTP ${status}). Skipping.`);
+        return { success: false, data: null, message: `No SEO data (HTTP ${status})` };
+      }
+
+      // Anything else (500, network, etc.) is a real problem — log it loudly.
+      console.error(`[SEO] Request failed for ${url}:`, error);
+      return { success: false, data: null, message: 'Failed to fetch SEO data' };
     }
   },
-  
+
   clearCache: (pageType?: string, identifier?: string) => {
     if (pageType && identifier) {
       const cacheKey = `${pageType}/${identifier}`;
@@ -85,20 +96,20 @@ export const seoAPI = {
       console.log('🗑️ Cleared all SEO cache');
     }
   },
-  
+
   getAll: async (params?: SeoQueryParams) => {
     const timestamp = Date.now();
     return apiClient.get('/seo', { params: { ...params, _cb: timestamp } });
   },
-  
+
   createOrUpdate: async (seoData: FormData) => {
     return apiClient.post('/seo', seoData);
   },
-  
+
   delete: async (id: string) => {
     return apiClient.delete(`/seo/${id}`);
   },
-  
+
   bulkUpdate: async (seoEntries: Partial<SeoData>[]) => {
     return apiClient.post('/seo/bulk', { seoEntries });
   }

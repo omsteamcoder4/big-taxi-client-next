@@ -87,6 +87,8 @@ export default function FloatingButtons() {
           href={formatWhatsAppUrl(settings.whatsapp)}
           target="_blank"
           rel="noopener noreferrer"
+          data-umami-event="whatsapp_click"
+          data-umami-event-location="floating_button"
           className="w-14 h-14 bg-gradient-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transform transition-all duration-300 cursor-pointer group flex-shrink-0 border-4 border-green-500"
           aria-label="Contact on WhatsApp"
         >
@@ -100,6 +102,8 @@ export default function FloatingButtons() {
       {settings?.phone && (
         <a
           href={`tel:${settings.phone.replace(/\D/g, '')}`}
+          data-umami-event="phone_click"
+          data-umami-event-location="floating_button"
           className="w-14 h-14 bg-gradient-to-br from-pink-400 to-pink-600 rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transform transition-all duration-300 cursor-pointer flex-shrink-0 border-4 border-pink-500"
           aria-label="Call us"
         >

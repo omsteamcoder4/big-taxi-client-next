@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { MapPin, Phone, Mail, ChevronRight, ArrowUp, Facebook, Instagram, Twitter, Youtube } from "lucide-react";
+import { FaFacebookF, FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
+import { MapPin, Phone, Mail, ChevronRight, ArrowUp } from "lucide-react";
 import { settingsAPI, type Settings } from "@/lib/settingsAPI";
 import { usePathname } from "next/navigation";
 
@@ -86,7 +87,7 @@ export default function Footer() {
 
       {/* Main Footer - Light Theme */}
       <div className="bg-white text-gray-800 pt-16 pb-6 border-t border-gray-200">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+        <div className="max-w-8xl mx-auto px-6 lg:px-8">
           
           {/* Top Grid - 4 Columns */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 pb-12 border-b border-gray-200">
@@ -136,7 +137,7 @@ export default function Footer() {
               </h4>
               <ul className="space-y-2.5">
                 {servicesLinks.map((link) => (
-                  <li key={link.href}>
+                  <li key={`${link.href}-${link.label}`}>
                     <Link
                       href={link.href}
                       className="text-sm text-gray-600 hover:text-emerald-600 transition-colors duration-200 flex items-center gap-2 group"
@@ -163,6 +164,8 @@ export default function Footer() {
                   <Phone className="w-5 h-5 text-emerald-600 flex-shrink-0" />
                   <a
                     href={`tel:${settings?.phone ? settings.phone.replace(/\D/g, "") : "7448899933"}`}
+                    data-umami-event="phone_click"
+                    data-umami-event-location="footer"
                     className="text-gray-600 hover:text-emerald-600 transition-colors"
                   >
                     {settings?.phone || "744 88 999 33"}
@@ -172,6 +175,8 @@ export default function Footer() {
                   <Mail className="w-5 h-5 text-emerald-600 flex-shrink-0" />
                   <a
                     href={`mailto:${settings?.email || "bigtaxicars@gmail.com"}`}
+                    data-umami-event="email_click"
+                    data-umami-event-location="footer"
                     className="text-gray-600 hover:text-emerald-600 transition-colors"
                   >
                     {settings?.email || "bigtaxicars@gmail.com"}

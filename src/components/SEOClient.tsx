@@ -3,6 +3,7 @@
 
 import { useCallback, useEffect, useRef } from 'react';
 import { seoAPI } from '@/lib/seoAPI';
+import apiClient from '@/lib/axiosConfig';
 
 interface SEOData {
   metaTitle?: string;
@@ -299,20 +300,61 @@ export default function SEOClient({
       robots.setAttribute('content', finalRobots);
     }
     
-    // Update header scripts (only for non-blog pages, or if provided)
+    // Update header scripts (only for non-blog pages)
     if (!isBlogPost && seoData?.headerScripts && seoData.headerScripts.trim()) {
-      const existingScript = document.getElementById('seo-header-script');
-      if (existingScript) {
-        existingScript.innerHTML = seoData.headerScripts;
+      const payload = seoData.headerScripts.trim();
+
+      // Remove any previously injected header scripts before re-injecting.
+      document.querySelectorAll('[data-seo-header-script]').forEach(el => el.remove());
+
+      // Case 1: payload is a full HTML snippet containing <script> tags.
+      // Parse it with DOMParser, then import the nodes into document.head.
+      // Imported <script> nodes DO execute (unlike innerHTML).
+      const containsScriptTags = /<script[\s>]/i.test(payload);
+
+      if (containsScriptTags) {
+        try {
+          const doc = new DOMParser().parseFromString(
+            `<!DOCTYPE html><html><head>${payload}</head></html>`,
+            'text/html',
+          );
+
+          doc.head.querySelectorAll('script').forEach(oldScript => {
+            const newScript = document.createElement('script');
+            // Copy every attribute (src, async, defer, type, data-*, etc.)
+            for (const attr of Array.from(oldScript.attributes)) {
+              newScript.setAttribute(attr.name, attr.value);
+            }
+            // Inline body vs external src
+            if (!oldScript.src && oldScript.textContent) {
+              newScript.textContent = oldScript.textContent;
+            }
+            newScript.setAttribute('data-seo-header-script', 'true');
+            document.head.appendChild(newScript);
+          });
+
+          // Also import any non-script nodes that were in the snippet
+          // (rare, but harmless — e.g. <link rel="preload">).
+          doc.head.querySelectorAll('link,meta,style').forEach(node => {
+            const imported = document.importNode(node, true);
+            imported.setAttribute('data-seo-header-script', 'true');
+            document.head.appendChild(imported);
+          });
+        } catch (err) {
+          console.warn('[SEO] Failed to parse headerScripts HTML:', err);
+        }
       } else {
+        // Case 2: payload is raw JavaScript (no <script> wrapper).
+        // Inject it as a plain inline script element.
         const script = document.createElement('script');
         script.id = 'seo-header-script';
-        script.innerHTML = seoData.headerScripts;
+        script.setAttribute('data-seo-header-script', 'true');
+        script.textContent = payload;
         document.head.appendChild(script);
       }
     } else if (!isBlogPost) {
-      const existingScript = document.getElementById('seo-header-script');
-      if (existingScript) existingScript.remove();
+      // No header scripts on this page — clean up anything we injected before.
+      document.querySelectorAll('[data-seo-header-script], #seo-header-script').forEach(el => el.remove());
     }
   }, [pageType, blog, customTitle, customDescription, customImage, defaultTitle, defaultDescription]);
 
@@ -378,6 +420,51 @@ export default function SEOClient({
       updateSEOTags(null);
     }
   }, [blog, pageType, updateSEOTags]);
-  
+
+  // ============ UMAMI ANALYTICS (config fetched from server) ============
+  // Fetches Umami config from the server (single source of truth) and
+  // injects the tracking script once. Umami auto-tracks SPA route changes,
+  // so no manual pushState hooks are needed.
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    let cancelled = false;
+
+    const loadUmami = async () => {
+      // Prevent double-injection across re-renders / route changes
+      if (document.getElementById('umami-script')) return;
+
+      try {
+        const res = await apiClient.get('/analytics/config');
+        const config = res.data?.data;
+
+        if (cancelled) return;
+
+        if (!config?.enabled || !config.host || !config.websiteId) {
+          // Analytics disabled on server — silently skip
+          return;
+        }
+
+        // Inject Umami script
+        const script = document.createElement('script');
+        script.id = 'umami-script';
+        script.defer = true;
+        script.src = `${config.host}/script.js`;
+        script.setAttribute('data-website-id', config.websiteId);
+        script.setAttribute('data-host-url', config.host); // Required for self-hosted
+        document.head.appendChild(script);
+      } catch (err) {
+        // Analytics failure must never break the page
+        console.warn('⚠️ Umami config fetch failed (analytics disabled):', err);
+      }
+    };
+
+    loadUmami();
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   return null;
 }

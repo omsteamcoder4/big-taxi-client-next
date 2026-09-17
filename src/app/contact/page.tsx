@@ -75,6 +75,13 @@ Please respond to this inquiry at your earliest convenience. Thank you!`
       return
     }
 
+    // ============ UMAMI EVENT TRACKING ============
+    if (typeof window !== 'undefined' && (window as any).umami) {
+      (window as any).umami.track('contact_form_submitted', {
+        source: 'contact_page',
+      });
+    }
+
     const whatsappNumber = settings?.whatsapp?.replace(/\D/g, '') || "916381188591"
     const message = generateWhatsAppMessage()
     const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${message}`
@@ -177,6 +184,8 @@ Please respond to this inquiry at your earliest convenience. Thank you!`
                         </h3>
                         <a
                           href={`tel:${phoneLink}`}
+                          data-umami-event="phone_click"
+                          data-umami-event-location="contact_page"
                           className="text-gray-800 font-bold text-lg xs:text-xl sm:text-2xl hover:text-blue-600 transition-colors cursor-pointer break-all"
                         >
                           {formattedPhone}
@@ -200,6 +209,8 @@ Please respond to this inquiry at your earliest convenience. Thank you!`
                           href={`https://wa.me/${whatsappLink}`}
                           target="_blank"
                           rel="noopener noreferrer"
+                          data-umami-event="whatsapp_click"
+                          data-umami-event-location="contact_page"
                           className="text-gray-800 font-bold text-lg xs:text-xl sm:text-2xl hover:text-emerald-600 transition-colors cursor-pointer break-all"
                         >
                           {formattedPhone}
@@ -329,6 +340,8 @@ Please respond to this inquiry at your earliest convenience. Thank you!`
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 xs:gap-6 sm:gap-8">
               <a
                 href={`tel:${phoneLink}`}
+                data-umami-event="phone_click"
+                data-umami-event-location="contact_quick_actions"
                 className="bg-white/80 backdrop-blur-sm p-6 xs:p-8 rounded-3xl shadow-lg shadow-blue-100/50 border border-blue-100/30 hover:shadow-xl hover:shadow-blue-200/50 hover:scale-105 transition-all duration-300 text-center cursor-pointer group"
               >
                 <div className="text-5xl xs:text-6xl mb-3 xs:mb-4 group-hover:scale-110 transform transition-transform duration-300">
@@ -342,6 +355,8 @@ Please respond to this inquiry at your earliest convenience. Thank you!`
                 href={`https://wa.me/${whatsappLink}`}
                 target="_blank"
                 rel="noopener noreferrer"
+                data-umami-event="whatsapp_click"
+                data-umami-event-location="contact_quick_actions"
                 className="bg-white/80 backdrop-blur-sm p-6 xs:p-8 rounded-3xl shadow-lg shadow-green-100/50 border border-green-100/30 hover:shadow-xl hover:shadow-green-200/50 hover:scale-105 transition-all duration-300 text-center cursor-pointer group"
               >
                 <div className="text-5xl xs:text-6xl mb-3 xs:mb-4 group-hover:scale-110 transform transition-transform duration-300">
@@ -353,6 +368,9 @@ Please respond to this inquiry at your earliest convenience. Thank you!`
 
               <a
                 href="/booking"
+                data-umami-event="cta_click"
+                data-umami-event-location="contact_quick_actions"
+                data-umami-event-text="Book Online"
                 className="bg-white/80 backdrop-blur-sm p-6 xs:p-8 rounded-3xl shadow-lg shadow-blue-100/50 border border-blue-100/30 hover:shadow-xl hover:shadow-blue-200/50 hover:scale-105 transition-all duration-300 text-center cursor-pointer group"
               >
                 <div className="text-5xl xs:text-6xl mb-3 xs:mb-4 group-hover:scale-110 transform transition-transform duration-300">

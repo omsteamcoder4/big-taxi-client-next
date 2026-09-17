@@ -123,6 +123,8 @@ export default function Header() {
               href={`https://wa.me/${displayWhatsApp}`}
               target="_blank"
               rel="noopener noreferrer"
+              data-umami-event="whatsapp_click"
+              data-umami-event-location="header"
               className="hidden sm:flex items-center gap-2 px-5 h-full bg-[#25D366] hover:bg-[#20ba5a] text-white font-bold text-xs uppercase tracking-wider transition-colors shrink-0"
             >
               <MessageSquare className="w-4 h-4 fill-white" />
@@ -132,6 +134,8 @@ export default function Header() {
             {/* Bright Yellow 24-Hour Call Block */}
             <a
               href={`tel:${displayRawPhone}`}
+              data-umami-event="phone_click"
+              data-umami-event-location="header"
               className="hidden md:flex flex-col justify-center px-8 h-full bg-[#FFB800] hover:bg-[#e0a200] text-black font-extrabold transition-colors shrink-0 leading-tight"
             >
               <span className="text-[11px] tracking-wider uppercase font-bold text-black/80">
@@ -208,6 +212,8 @@ export default function Header() {
             <div className="pt-4 space-y-3">
               <a
                 href={`tel:${displayRawPhone}`}
+                data-umami-event="phone_click"
+                data-umami-event-location="header_mobile"
                 className="w-full py-3.5 rounded-xl bg-[#FFB800] text-black font-extrabold text-base flex flex-col items-center justify-center transition-colors shadow-lg"
               >
                 <span className="text-[10px] tracking-widest uppercase opacity-80">
@@ -223,6 +229,8 @@ export default function Header() {
                 href={`https://wa.me/${displayWhatsApp}`}
                 target="_blank"
                 rel="noopener noreferrer"
+                data-umami-event="whatsapp_click"
+                data-umami-event-location="header_mobile"
                 className="w-full py-3.5 rounded-xl bg-[#25D366] text-white font-bold text-base flex items-center justify-center gap-2 transition-colors shadow-lg"
               >
                 <MessageSquare className="w-5 h-5 fill-white" />

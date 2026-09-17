@@ -131,6 +131,15 @@ Please confirm this booking at your earliest. Thank you!`;
 
       console.log("Booking sent successfully!", data);
 
+      // ============ UMAMI EVENT TRACKING ============
+      if (typeof window !== 'undefined' && (window as any).umami) {
+        (window as any).umami.track('booking_submitted', {
+          trip_type: formData.tripType || 'unknown',
+          vehicle_type: formData.vehicleType || 'unknown',
+          has_phone: !!formData.phone,
+        });
+      }
+
       setIsBookingSent(true);
       setShowSuccess(true);
 

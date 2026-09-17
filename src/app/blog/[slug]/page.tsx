@@ -95,6 +95,8 @@ export default function BlogDetailPage() {
         <div className="max-w-full px-4 sm:px-6 lg:px-8 py-4">
           <Link
             href="/blog"
+            data-umami-event="blog_back_click"
+            data-umami-event-location="blog_post_top"
             className="inline-flex items-center gap-2 text-gray-500 hover:text-green-500 transition-colors text-sm font-medium"
           >
             <ArrowLeft size={16} />
@@ -161,6 +163,9 @@ export default function BlogDetailPage() {
                   <Link
                     key={tag}
                     href={`/blog?tag=${encodeURIComponent(tag)}`}
+                    data-umami-event="blog_tag_click"
+                    data-umami-event-tag={tag}
+                    data-umami-event-location="blog_post"
                     className="px-3 py-1.5 bg-gray-100 text-gray-700 text-sm rounded-full hover:bg-green-500 hover:text-white transition-all"
                   >
                     #{tag}
@@ -183,7 +188,12 @@ export default function BlogDetailPage() {
             <div className="max-w-full px-4 sm:px-6 lg:px-8">
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-2xl font-bold text-gray-900">Related Posts</h2>
-                <Link href="/blog" className="text-green-500 hover:text-green-600 text-sm font-medium flex items-center gap-1">
+                <Link
+                  href="/blog"
+                  data-umami-event="blog_view_all_click"
+                  data-umami-event-location="blog_post_related"
+                  className="text-green-500 hover:text-green-600 text-sm font-medium flex items-center gap-1"
+                >
                   View All <ArrowUpRight size={14} />
                 </Link>
               </div>
@@ -207,6 +217,9 @@ export default function BlogDetailPage() {
             </p>
             <Link
               href="/booking"
+              data-umami-event="cta_click"
+              data-umami-event-location="blog_post_bottom"
+              data-umami-event-text="Book Now"
               className="inline-block bg-green-500 text-white font-bold px-8 py-3.5 rounded-xl hover:bg-green-600 shadow-lg hover:shadow-green-500/25 transform hover:scale-105 transition-all"
             >
               Book Now
