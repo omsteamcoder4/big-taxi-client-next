@@ -30,8 +30,8 @@ export default function TermsPage() {
     )
   }
 
-  const phoneLink = settings?.phone?.replace(/\D/g, '') || "916381188591"
-  const whatsappLink = settings?.whatsapp?.replace(/\D/g, '') || "916381188591"
+  const phoneLink = settings?.phone?.replace(/\D/g, '') || "916379828716"
+  const whatsappLink = settings?.whatsapp?.replace(/\D/g, '') || "916379828716"
 
   return (
     <div className="min-h-screen pt-16 md:pt-20">

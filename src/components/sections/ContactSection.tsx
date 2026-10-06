@@ -32,7 +32,7 @@ export default function ContactSection() {
     const drop = formData.get("drop")
     const message = formData.get("message")
 
-    const whatsappNumber = settings?.whatsapp?.replace(/\D/g, '') || "916381188591"
+    const whatsappNumber = settings?.whatsapp?.replace(/\D/g, '') || "916379828716"
     const whatsappMessage = `Hello! I'm ${name}. I'd like to book a taxi.%0A%0APhone: ${phone}%0APickup: ${pickup}%0ADrop: ${drop}${message ? `%0AMessage: ${message}` : ""}`
     window.open(`https://wa.me/${whatsappNumber}?text=${whatsappMessage}`, "_blank")
   }
@@ -84,10 +84,10 @@ export default function ContactSection() {
               <div>
                 <h4 className="font-black text-[rgb(60,40,30)] mb-0.5 xs:mb-1 text-sm xs:text-base">Phone</h4>
                 <a
-                  href={`tel:${settings?.phone?.replace(/\D/g, '') || "916381188591"}`}
+                  href={`tel:${settings?.phone?.replace(/\D/g, '') || "916379828716"}`}
                   className="text-[rgb(255,128,0)] font-semibold hover:underline cursor-pointer text-xs xs:text-sm sm:text-base"
                 >
-                  {settings?.phone || "+91 6381188591"}
+                  {settings?.phone || "+91 6379828716"}
                 </a>
               </div>
             </div>
@@ -102,7 +102,7 @@ export default function ContactSection() {
               <div>
                 <h4 className="font-black text-[rgb(60,40,30)] mb-0.5 xs:mb-1 text-sm xs:text-base">WhatsApp</h4>
                 <a
-                  href={`https://wa.me/${settings?.whatsapp?.replace(/\D/g, '') || "916381188591"}`}
+                  href={`https://wa.me/${settings?.whatsapp?.replace(/\D/g, '') || "916379828716"}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-[rgb(255,128,0)] font-semibold hover:underline cursor-pointer text-xs xs:text-sm sm:text-base"
@@ -138,13 +138,13 @@ export default function ContactSection() {
               </h4>
               <div className="flex flex-col xs:flex-row gap-2 xs:gap-2 sm:gap-3">
                 <a
-                  href={`tel:${settings?.phone?.replace(/\D/g, '') || "916381188591"}`}
+                  href={`tel:${settings?.phone?.replace(/\D/g, '') || "916379828716"}`}
                   className="cursor-pointer px-3 xs:px-4 sm:px-6 py-2 xs:py-2.5 sm:py-3 bg-[rgb(255,193,7)] text-white font-bold text-xs xs:text-sm sm:text-base rounded-lg xs:rounded-xl hover:shadow-lg transform hover:scale-105 transition-all"
                 >
                   📞 Call Now
                 </a>
                 <a
-                  href={`https://wa.me/${settings?.whatsapp?.replace(/\D/g, '') || "916381188591"}`}
+                  href={`https://wa.me/${settings?.whatsapp?.replace(/\D/g, '') || "916379828716"}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="cursor-pointer px-3 xs:px-4 sm:px-6 py-2 xs:py-2.5 sm:py-3 bg-[rgb(37,211,102)] text-white font-bold text-xs xs:text-sm sm:text-base rounded-lg xs:rounded-xl hover:shadow-lg transform hover:scale-105 transition-all"

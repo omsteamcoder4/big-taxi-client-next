@@ -36,7 +36,7 @@ export default function BookingSection() {
   }
 
   // Get phone number from settings or use fallback
-  const phoneNumber = settings?.phone || "02 6572 1133"
+  const phoneNumber = settings?.phone || "63 7982 8716"
   const rawPhone = phoneNumber.replace(/\D/g, "")
 
   return (

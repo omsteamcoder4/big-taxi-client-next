@@ -152,7 +152,7 @@ Keep your responses concise, helpful, and friendly. If you don't know something,
       }
     } catch (error) {
       console.error('Gemini API error:', error)
-      return "I'm experiencing some technical difficulties. Please try again in a moment, or contact us directly at +91 6381188591."
+      return "I'm experiencing some technical difficulties. Please try again in a moment, or contact us directly at +91 6379828716."
     }
   }, [])
 

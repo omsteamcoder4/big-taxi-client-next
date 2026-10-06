@@ -82,7 +82,7 @@ Please respond to this inquiry at your earliest convenience. Thank you!`
       });
     }
 
-    const whatsappNumber = settings?.whatsapp?.replace(/\D/g, '') || "916381188591"
+    const whatsappNumber = settings?.whatsapp?.replace(/\D/g, '') || "916379828716"
     const message = generateWhatsAppMessage()
     const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${message}`
 
@@ -114,9 +114,9 @@ Please respond to this inquiry at your earliest convenience. Thank you!`
     )
   }
 
-  const formattedPhone = settings?.phone || "+91 6381188591"
-  const phoneLink = settings?.phone?.replace(/\D/g, '') || "916381188591"
-  const whatsappLink = settings?.whatsapp?.replace(/\D/g, '') || "916381188591"
+  const formattedPhone = settings?.phone || "+91 6379828716"
+  const phoneLink = settings?.phone?.replace(/\D/g, '') || "916379828716"
+  const whatsappLink = settings?.whatsapp?.replace(/\D/g, '') || "916379828716"
   const formattedAddress = settings?.address || "No-44, Ezhil Nagar, Konerikuppam Main Road, Kudapakkam, Villiyanur, Puducherry - 605502, India"
 
   return (

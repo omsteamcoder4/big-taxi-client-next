@@ -183,9 +183,9 @@ Please confirm this booking at your earliest. Thank you!`;
     );
   }
 
-  const formattedPhone = settings?.phone || "+91 6381188591";
-  const phoneLink = settings?.phone?.replace(/\D/g, "") || "916381188591";
-  const whatsappLink = settings?.whatsapp?.replace(/\D/g, "") || "916381188591";
+  const formattedPhone = settings?.phone || "+91 6379828716";
+  const phoneLink = settings?.phone?.replace(/\D/g, "") || "916379828716";
+  const whatsappLink = settings?.whatsapp?.replace(/\D/g, "") || "916379828716";
 
   return (
     <>

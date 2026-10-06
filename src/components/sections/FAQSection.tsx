@@ -19,7 +19,7 @@ export default function FAQSection() {
     {
       question: "How do I book a taxi?",
       answer:
-        "Booking is simple! You can call us at +91 6381188591, WhatsApp us, or use our online booking form. Just provide your pickup location, destination, date, and preferred vehicle type. We'll confirm your booking immediately.",
+        "Booking is simple! You can call us at +91 6379828716, WhatsApp us, or use our online booking form. Just provide your pickup location, destination, date, and preferred vehicle type. We'll confirm your booking immediately.",
     },
     {
       question: "What is your cancellation policy?",

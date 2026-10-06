@@ -163,7 +163,7 @@ export default function Footer() {
                 <li className="flex items-center gap-3 text-sm">
                   <Phone className="w-5 h-5 text-emerald-600 flex-shrink-0" />
                   <a
-                    href={`tel:${settings?.phone ? settings.phone.replace(/\D/g, "") : "7448899933"}`}
+                    href={`tel:${settings?.phone ? settings.phone.replace(/\D/g, "") : "6379828716"}`}
                     data-umami-event="phone_click"
                     data-umami-event-location="footer"
                     className="text-gray-600 hover:text-emerald-600 transition-colors"

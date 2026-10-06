@@ -16,8 +16,8 @@ export default function Header() {
     phone: string
     whatsapp: string
   }>({
-    phone: "02 6572 1133",
-    whatsapp: "916381188591"
+    phone: "63 7982 8716",
+    whatsapp: "916379828716"
   })
   const [loading, setLoading] = useState(true)
   const pathname = usePathname()
@@ -29,8 +29,8 @@ export default function Header() {
         const response = await settingsAPI.getPublic()
         if (response.success && response.data) {
           setSettings({
-            phone: response.data.phone || "02 6572 1133",
-            whatsapp: response.data.whatsapp || "916381188591"
+            phone: response.data.phone || "63 7982 8716",
+            whatsapp: response.data.whatsapp || "916379828716"
           })
         }
       } catch (error) {
@@ -65,9 +65,9 @@ export default function Header() {
   }
 
   // Show loading state or default values while fetching
-  const displayPhone = loading ? "02 6572 1133" : phoneNumber
+  const displayPhone = loading ? "63 7982 8716" : phoneNumber
   const displayRawPhone = displayPhone.replace(/\D/g, "")
-  const displayWhatsApp = loading ? "916381188591" : whatsappNumber
+  const displayWhatsApp = loading ? "916379828716" : whatsappNumber
 
   return (
     <>

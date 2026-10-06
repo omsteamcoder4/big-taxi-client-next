@@ -24,7 +24,7 @@ export default function StackedCardsSection() {
   }
 
   const formattedPhone = settings?.phone || "+91 63811 88591"
-  const phoneLink = settings?.phone?.replace(/\D/g, "") || "916381188591"
+  const phoneLink = settings?.phone?.replace(/\D/g, "") || "916379828716"
 
   const slides = [
     {

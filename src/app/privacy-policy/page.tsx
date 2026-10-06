@@ -30,7 +30,7 @@ export default function PrivacyPage() {
     )
   }
 
-  const formattedPhone = settings?.phone || "+91 6381188591"
+  const formattedPhone = settings?.phone || "+91 6379828716"
   const formattedAddress = settings?.address || "No-44, Ezhil Nagar, Konerikuppam Main Road, Kudapakkam, Villiyanur, Puducherry - 605502"
 
   return (

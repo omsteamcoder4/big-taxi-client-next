@@ -137,7 +137,7 @@ export default function HomePage() {
               "name": localSeo.businessName,
               "description": localSeo.metaDescription || "Big Taxi Tiruppur - Reliable taxi services",
               "url": typeof window !== 'undefined' ? window.location.href : "https://bigtaxitiruppur.com",
-              "telephone": localSeo.businessPhone || "+916381188591",
+              "telephone": localSeo.businessPhone || "+916379828716",
               "email": localSeo.businessEmail || "info@bigtaxitiruppur.com",
               "openingHours": localSeo.businessHours || "Mo-Su 00:00-23:59",
               ...(localSeo.businessAddress && {
@@ -181,7 +181,7 @@ export default function HomePage() {
               ],
               "contactPoint": {
                 "@type": "ContactPoint",
-                "telephone": "+916381188591",
+                "telephone": "+916379828716",
                 "contactType": "customer service",
                 "availableLanguage": ["English", "Tamil"],
                 "areaServed": "IN"
